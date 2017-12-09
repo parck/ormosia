@@ -1,6 +1,7 @@
 package cn.edots.ormosia.dao;
 
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +18,16 @@ import java.lang.reflect.Type;
 public abstract class DomainHDAO<PK extends Serializable, T extends Serializable> implements DomainDAO<PK, T> {
 
     protected SessionFactory sessionFactory;
+    protected Session currentSession;
 
     @Resource
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+        this.currentSession = sessionFactory.getCurrentSession();
     }
 
     // 实体类类型(由构造方法自动赋值)
-    private final Class<T> type;
+    protected final Class<T> type;
 
     // 构造方法，根据实例类自动获取实体类类型
     public DomainHDAO() {
