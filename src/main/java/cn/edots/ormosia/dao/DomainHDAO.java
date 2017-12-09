@@ -18,12 +18,10 @@ import java.lang.reflect.Type;
 public abstract class DomainHDAO<PK extends Serializable, T extends Serializable> implements DomainDAO<PK, T> {
 
     protected SessionFactory sessionFactory;
-    protected Session currentSession;
 
     @Resource
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        this.currentSession = sessionFactory.getCurrentSession();
     }
 
     // 实体类类型(由构造方法自动赋值)
