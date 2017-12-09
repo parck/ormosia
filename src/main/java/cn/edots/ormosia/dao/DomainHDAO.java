@@ -35,7 +35,15 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
         Type superclass = clazz.getGenericSuperclass();
         if (superclass instanceof ParameterizedType) {
             Type[] typeArguments = ((ParameterizedType) superclass).getActualTypeArguments();
-            this.type = (Class<T>) typeArguments[1];
+            if (typeArguments != null) {
+                if (typeArguments.length == 1)
+                    this.type = (Class<T>) typeArguments[0];
+                else
+                    this.type = (Class<T>) typeArguments[1];
+            } else {
+                new Throwable(new NullPointerException());
+                this.type = null;
+            }
         } else {
             throw new IllegalStateException("Unknown Entity Class");
         }
