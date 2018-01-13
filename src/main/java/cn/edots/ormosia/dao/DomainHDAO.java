@@ -97,19 +97,16 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
             for (Criterion c : criterias)
                 criteria.add(c);
         // 添加排序
-        if (!"".equals(pagination.getBy()))
+        if (pagination.getBy() != null && !"".equals(pagination.getBy()))
             if (pagination.isDesc()) criteria.addOrder(Order.desc(pagination.getBy()));
             else criteria.addOrder(Order.asc(pagination.getBy()));
-        // 获取根据条件分页查询的总行数
-        int count = (Integer) criteria.setProjection(Projections.rowCount()).uniqueResult();
-        criteria.setProjection(null);
         // 设置分页数据
         criteria.setFirstResult((pagination.getPage() - 1) * pagination.getSize());
         criteria.setMaxResults(pagination.getSize());
         // 设置数据
         pagination.setDomains(criteria.list());
         pagination.setTotal(total);
-        pagination.setCount(count);
+        pagination.setCount(pagination.getDomains().size());
         return pagination;
     }
 }
