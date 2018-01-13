@@ -1,6 +1,8 @@
 package cn.edots.ormosia.service;
 
 import cn.edots.ormosia.dao.DomainDAO;
+import cn.edots.ormosia.model.Pagination;
+import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
 
@@ -38,4 +40,7 @@ public abstract class DomainServiceBean<PK extends Serializable, T extends Seria
         return getEntityDAO().get(key);
     }
 
+    public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) {
+        return getEntityDAO().paging(pagination, criteria);
+    }
 }

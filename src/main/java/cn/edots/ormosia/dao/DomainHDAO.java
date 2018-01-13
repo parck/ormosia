@@ -1,14 +1,20 @@
 package cn.edots.ormosia.dao;
 
 
-import org.hibernate.Session;
+import cn.edots.ormosia.model.Pagination;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * @Author ParckLee.
@@ -78,5 +84,30 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
                 .getCurrentSession()
                 .createQuery("FROM " + type.getSimpleName() + " AS t WHERE t." + type.getSimpleName().toLowerCase() + "Id = :key")
                 .setParameter("key", key).uniqueResult();
+    }
+
+    public Pagination<T> paging(Pagination<T> pagination, Criterion... criterias) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
+        // 查询记录总数
+        long total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+        criteria.setProjection(null);
+        // 添加查询条件
+        for (Criterion c : criterias)
+            criteria.add(c);
+        // 添加排序
+        if (!"".equals(pagination.getBy()))
+            if (pagination.isDesc()) criteria.addOrder(Order.desc(pagination.getBy()));
+            else criteria.addOrder(Order.asc(pagination.getBy()));
+        // 获取根据条件分页查询的总行数
+        int count = (Integer) criteria.setProjection(Projections.rowCount()).uniqueResult();
+        criteria.setProjection(null);
+        // 设置分页数据
+        criteria.setFirstResult((pagination.getPage() - 1) * pagination.getSize());
+        criteria.setMaxResults(pagination.getSize());
+        // 设置数据
+        pagination.setDomains(criteria.list());
+        pagination.setTotal(total);
+        pagination.setCount(count);
+        return pagination;
     }
 }

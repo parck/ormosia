@@ -1,5 +1,8 @@
 package cn.edots.ormosia.service;
 
+import cn.edots.ormosia.model.Pagination;
+import org.hibernate.criterion.Criterion;
+
 import java.io.Serializable;
 
 /**
@@ -20,5 +23,7 @@ public interface DomainService<PK extends Serializable, T extends Serializable> 
     T get(PK key);
 
     T get(String key);
+
+    Pagination<T> paging(Pagination<T> pagination, Criterion... criteria);
 
 }

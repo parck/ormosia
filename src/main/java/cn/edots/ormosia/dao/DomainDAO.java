@@ -1,5 +1,8 @@
 package cn.edots.ormosia.dao;
 
+import cn.edots.ormosia.model.Pagination;
+import org.hibernate.criterion.Criterion;
+
 import java.io.Serializable;
 
 /**
@@ -21,5 +24,5 @@ public interface DomainDAO<PK extends Serializable, T extends Serializable> {
 
     T get(String key);
 
-//    Pagination<T> paging(Pagination<T> pagination, Criterion... criterions);
+    Pagination<T> paging(Pagination<T> pagination, Criterion... criteria);
 }
