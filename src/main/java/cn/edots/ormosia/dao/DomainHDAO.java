@@ -86,14 +86,16 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
                 .setParameter("key", key).uniqueResult();
     }
 
+    @Transactional(readOnly = true)
     public Pagination<T> paging(Pagination<T> pagination, Criterion... criterias) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
         // 查询记录总数
         long total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
         criteria.setProjection(null);
         // 添加查询条件
-        for (Criterion c : criterias)
-            criteria.add(c);
+        if (criterias != null)
+            for (Criterion c : criterias)
+                criteria.add(c);
         // 添加排序
         if (!"".equals(pagination.getBy()))
             if (pagination.isDesc()) criteria.addOrder(Order.desc(pagination.getBy()));
