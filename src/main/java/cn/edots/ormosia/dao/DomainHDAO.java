@@ -7,10 +7,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -82,8 +87,25 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
     public T get(String key) {
         return (T) sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM " + type.getSimpleName() + " AS t WHERE t." + type.getSimpleName().toLowerCase() + "Id = :key")
-                .setParameter("key", key).uniqueResult();
+                .createCriteria(type)
+                .add(Restrictions.eq(type.getSimpleName().toLowerCase() + "Id", key))
+                .uniqueResult();
+    }
+
+    @Transactional(readOnly = true)
+    public T get(Criterion... criterias) {
+        if (criterias == null) return null;
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
+        for (Criterion c : criterias) criteria.add(c);
+        return (T) criteria.uniqueResult();
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> list(Criterion... criterias) {
+        if (criterias == null) return null;
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
+        for (Criterion c : criterias) criteria.add(c);
+        return criteria.list();
     }
 
     @Transactional(readOnly = true)

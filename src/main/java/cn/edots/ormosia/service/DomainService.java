@@ -4,6 +4,7 @@ import cn.edots.ormosia.model.Pagination;
 import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author ParckLee.
@@ -23,6 +24,10 @@ public interface DomainService<PK extends Serializable, T extends Serializable> 
     T get(PK key);
 
     T get(String key);
+
+    T get(Criterion... criterias);
+
+    List<T> list(Criterion... criterias);
 
     Pagination<T> paging(Pagination<T> pagination, Criterion... criteria);
 
