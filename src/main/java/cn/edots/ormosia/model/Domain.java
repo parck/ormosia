@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @Author ParckLee.
@@ -15,6 +16,7 @@ import java.util.Date;
 public abstract class Domain implements Serializable {
 
     protected Long id;
+    protected String key = UUID.randomUUID().toString();
     protected Date dateCreated = new Date();
     protected Date lastUpdated = new Date();
     protected int version = 0;
@@ -30,6 +32,15 @@ public abstract class Domain implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "key", nullable = false, length = 64)
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
