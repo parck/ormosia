@@ -17,39 +17,39 @@ public abstract class DomainServiceBean<PK extends Serializable, T extends Seria
 
     public abstract DomainDAO<PK, T> getEntityDAO();
 
-    public void save(T entity) {
+    public void save(T entity) throws Exception {
         getEntityDAO().save(entity);
     }
 
-    public void delete(T entity) {
+    public void delete(T entity) throws Exception {
         getEntityDAO().delete(entity);
     }
 
-    public void update(T entity) {
+    public void update(T entity) throws Exception {
         getEntityDAO().update(entity);
     }
 
-    public void merge(T entity) {
+    public void merge(T entity) throws Exception {
         getEntityDAO().merge(entity);
     }
 
-    public T get(PK key) {
+    public T get(PK key) throws Exception {
         return getEntityDAO().get(key);
     }
 
-    public T get(String key) {
+    public T get(String key) throws Exception {
         return getEntityDAO().get(key);
     }
 
-    public T get(Criterion... criterias) {
+    public T get(Criterion... criterias) throws Exception {
         return getEntityDAO().get(criterias);
     }
 
-    public List<T> list(Criterion... criterias) {
+    public List<T> list(Criterion... criterias) throws Exception {
         return getEntityDAO().list(criterias);
     }
 
-    public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) {
+    public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) throws Exception {
         return getEntityDAO().paging(pagination, criteria);
     }
 }

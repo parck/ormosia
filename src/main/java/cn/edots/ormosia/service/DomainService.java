@@ -13,22 +13,22 @@ import java.util.List;
  */
 public interface DomainService<PK extends Serializable, T extends Serializable> {
 
-    void save(T entity);
+    void save(T entity) throws Exception;
 
-    void delete(T entity);
+    void delete(T entity) throws Exception;
 
-    void update(T entity);
+    void update(T entity) throws Exception;
 
-    void merge(T entity);
+    void merge(T entity) throws Exception;
 
-    T get(PK key);
+    T get(PK key) throws Exception;
 
-    T get(String key);
+    T get(String key) throws Exception;
 
-    T get(Criterion... criterias);
+    T get(Criterion... criterias) throws Exception;
 
-    List<T> list(Criterion... criterias);
+    List<T> list(Criterion... criterias) throws Exception;
 
-    Pagination<T> paging(Pagination<T> pagination, Criterion... criteria);
+    Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) throws Exception;
 
 }
