@@ -93,40 +93,40 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
     }
 
     @Transactional(readOnly = true)
-    public T get(Criterion... criterias) {
-        if (criterias == null) return null;
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
-        for (Criterion c : criterias) criteria.add(c);
-        return (T) criteria.uniqueResult();
+    public T get(Criterion... criteria) {
+        if (criteria == null) return null;
+        Criteria criterion = sessionFactory.getCurrentSession().createCriteria(type);
+        for (Criterion c : criteria) criterion.add(c);
+        return (T) criterion.uniqueResult();
     }
 
     @Transactional(readOnly = true)
-    public List<T> list(Criterion... criterias) {
-        if (criterias == null) return null;
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
-        for (Criterion c : criterias) criteria.add(c);
-        return criteria.list();
+    public List<T> list(Criterion... criteria) {
+        if (criteria == null) return null;
+        Criteria criterion = sessionFactory.getCurrentSession().createCriteria(type);
+        for (Criterion c : criteria) criterion.add(c);
+        return criterion.list();
     }
 
     @Transactional(readOnly = true)
-    public Pagination<T> paging(Pagination<T> pagination, Criterion... criterias) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(type);
+    public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) {
+        Criteria criterion = sessionFactory.getCurrentSession().createCriteria(type);
         // 查询记录总数
-        long total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
-        criteria.setProjection(null);
+        long total = (Long) criterion.setProjection(Projections.rowCount()).uniqueResult();
+        criterion.setProjection(null);
         // 添加查询条件
-        if (criterias != null)
-            for (Criterion c : criterias)
-                criteria.add(c);
+        if (criteria != null)
+            for (Criterion c : criteria)
+                criterion.add(c);
         // 添加排序
         if (pagination.getBy() != null && !"".equals(pagination.getBy()))
-            if (pagination.isDesc()) criteria.addOrder(Order.desc(pagination.getBy()));
-            else criteria.addOrder(Order.asc(pagination.getBy()));
+            if (pagination.isDesc()) criterion.addOrder(Order.desc(pagination.getBy()));
+            else criterion.addOrder(Order.asc(pagination.getBy()));
         // 设置分页数据
-        criteria.setFirstResult((pagination.getPage() - 1) * pagination.getSize());
-        criteria.setMaxResults(pagination.getSize());
+        criterion.setFirstResult((pagination.getPage() - 1) * pagination.getSize());
+        criterion.setMaxResults(pagination.getSize());
         // 设置数据
-        pagination.setDomains(criteria.list());
+        pagination.setDomains(criterion.list());
         pagination.setTotal(total);
         pagination.setCount(pagination.getDomains().size());
         return pagination;

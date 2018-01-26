@@ -25,9 +25,9 @@ public interface DomainDAO<PK extends Serializable, T extends Serializable> {
 
     T get(String key);
 
-    T get(Criterion... criterias);
+    T get(Criterion... criteria);
 
-    List<T> list(Criterion... criterias);
+    List<T> list(Criterion... criteria);
 
-    Pagination<T> paging(Pagination<T> pagination, Criterion... criterias);
+    Pagination<T> paging(Pagination<T> pagination, Criterion... criteria);
 }

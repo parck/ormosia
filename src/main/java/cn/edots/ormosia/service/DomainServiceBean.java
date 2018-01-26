@@ -41,12 +41,12 @@ public abstract class DomainServiceBean<PK extends Serializable, T extends Seria
         return getEntityDAO().get(key);
     }
 
-    public T get(Criterion... criterias) throws Exception {
-        return getEntityDAO().get(criterias);
+    public T get(Criterion... criteria) throws Exception {
+        return getEntityDAO().get(criteria);
     }
 
-    public List<T> list(Criterion... criterias) throws Exception {
-        return getEntityDAO().list(criterias);
+    public List<T> list(Criterion... criteria) throws Exception {
+        return getEntityDAO().list(criteria);
     }
 
     public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) throws Exception {

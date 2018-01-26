@@ -25,9 +25,9 @@ public interface DomainService<PK extends Serializable, T extends Serializable> 
 
     T get(String key) throws Exception;
 
-    T get(Criterion... criterias) throws Exception;
+    T get(Criterion... criteria) throws Exception;
 
-    List<T> list(Criterion... criterias) throws Exception;
+    List<T> list(Criterion... criteria) throws Exception;
 
     Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) throws Exception;
 
