@@ -88,7 +88,7 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
         return (T) sessionFactory
                 .getCurrentSession()
                 .createCriteria(type)
-                .add(Restrictions.eq(type.getSimpleName().toLowerCase() + "Id", key))
+                .add(Restrictions.eq("key", key))
                 .uniqueResult();
     }
 
