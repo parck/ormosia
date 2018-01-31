@@ -12,6 +12,9 @@ import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContexts;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -30,9 +33,16 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
 
     protected SessionFactory sessionFactory;
 
+    protected EntityManager entityManager;
+
     @Resource
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     // 实体类类型(由构造方法自动赋值)
