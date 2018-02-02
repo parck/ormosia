@@ -16,14 +16,14 @@ import java.util.UUID;
 public abstract class Domain implements Serializable {
 
     protected Long id;
-    protected String key = UUID.randomUUID().toString();
+    protected String uuid = UUID.randomUUID().toString();
     protected Date dateCreated = new Date();
     protected Date lastUpdated = new Date();
     protected int version = 0;
     protected boolean deleted = false;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
     @GeneratedValue(generator = "system-id", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "system-id", strategy = "identity")
     public Long getId() {
@@ -34,17 +34,17 @@ public abstract class Domain implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "key", nullable = false, length = 64)
-    public String getKey() {
-        return key;
+    @Column(name = "uuid", nullable = false, length = 64)
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false, nullable = false)
+    @Column(insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -54,7 +54,7 @@ public abstract class Domain implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, nullable = false)
     public Date getLastUpdated() {
         return lastUpdated;
     }

@@ -23,7 +23,7 @@ public interface DomainDAO<PK extends Serializable, T extends Serializable> {
 
     T get(PK key);
 
-    T get(String key);
+    T get(String uuid);
 
     T get(Criterion... criteria);
 

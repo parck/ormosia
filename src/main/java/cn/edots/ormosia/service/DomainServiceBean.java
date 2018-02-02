@@ -37,8 +37,8 @@ public abstract class DomainServiceBean<PK extends Serializable, T extends Seria
         return getEntityDAO().get(key);
     }
 
-    public T get(String key) throws Exception {
-        return getEntityDAO().get(key);
+    public T get(String uuid) throws Exception {
+        return getEntityDAO().get(uuid);
     }
 
     public T get(Criterion... criteria) throws Exception {

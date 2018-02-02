@@ -94,11 +94,11 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
     }
 
     @Transactional(readOnly = true)
-    public T get(String key) {
+    public T get(String uuid) {
         return (T) sessionFactory
                 .getCurrentSession()
                 .createCriteria(type)
-                .add(Restrictions.eq("key", key))
+                .add(Restrictions.eq("uuid", uuid))
                 .uniqueResult();
     }
 

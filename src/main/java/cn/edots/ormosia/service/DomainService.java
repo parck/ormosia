@@ -23,7 +23,7 @@ public interface DomainService<PK extends Serializable, T extends Serializable> 
 
     T get(PK key) throws Exception;
 
-    T get(String key) throws Exception;
+    T get(String uuid) throws Exception;
 
     T get(Criterion... criteria) throws Exception;
 
