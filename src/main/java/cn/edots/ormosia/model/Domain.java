@@ -44,7 +44,7 @@ public abstract class Domain implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     public Date getDateCreated() {
         return dateCreated;
     }
