@@ -9,8 +9,8 @@ public class Pagination<T extends Serializable> implements Serializable {
 
     private int page = 1;
     private int size = 20;
-    private long total;
-    private int count;
+    private int total;
+    private long count;
     private List<T> domains;
     private String by;
     private boolean desc;
@@ -31,19 +31,19 @@ public class Pagination<T extends Serializable> implements Serializable {
         this.size = size;
     }
 
-    public long getTotal() {
-        return total;
+    public int getTotal() {
+        return (int) (this.count / this.size + (this.count % this.size == 0 ? 0 : 1));
     }
 
-    public void setTotal(long total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 
-    public int getCount() {
+    public long getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(long count) {
         this.count = count;
     }
 

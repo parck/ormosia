@@ -122,7 +122,7 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
     public Pagination<T> paging(Pagination<T> pagination, Criterion... criteria) {
         Criteria criterion = sessionFactory.getCurrentSession().createCriteria(type);
         // 查询记录总数
-        long total = (Long) criterion.setProjection(Projections.rowCount()).uniqueResult();
+        long count = (Long) criterion.setProjection(Projections.rowCount()).uniqueResult();
         criterion.setProjection(null);
         // 添加查询条件
         if (criteria != null)
@@ -137,8 +137,7 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
         criterion.setMaxResults(pagination.getSize());
         // 设置数据
         pagination.setDomains(criterion.list());
-        pagination.setTotal(total);
-        pagination.setCount(pagination.getDomains().size());
+        pagination.setCount(count);
         return pagination;
     }
 }
