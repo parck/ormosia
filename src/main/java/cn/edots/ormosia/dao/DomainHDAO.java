@@ -26,13 +26,8 @@ import java.util.List;
  */
 public abstract class DomainHDAO<PK extends Serializable, T extends Serializable> implements DomainDAO<PK, T> {
 
-    protected SessionFactory sessionFactory;
-
     @Resource
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
+    protected SessionFactory sessionFactory;
 
     // 实体类类型(由构造方法自动赋值)
     protected final Class<T> type;
