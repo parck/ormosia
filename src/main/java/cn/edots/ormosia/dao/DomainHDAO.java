@@ -8,6 +8,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -27,17 +28,11 @@ public abstract class DomainHDAO<PK extends Serializable, T extends Serializable
 
     protected SessionFactory sessionFactory;
 
-    protected EntityManager entityManager;
-
     @Resource
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    @PersistenceContext
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     // 实体类类型(由构造方法自动赋值)
     protected final Class<T> type;
